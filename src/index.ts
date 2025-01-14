@@ -1,0 +1,26 @@
+import { Request, Response } from "express";
+
+const express = require("express");
+// const { pool } = require("./db");
+const cors = require("cors");
+
+const router = require("./router");
+// const postRouter = require("./post/post.router");
+// const commentRouter = require("./comment/comment.router");
+// const userRouter = require("./user/user.router");
+
+const PORT = 8000;
+const app = express();
+
+app.use(cors());
+app.use(express.json());
+app.use(router);
+// app.use(postRouter);
+// app.use(commentRouter);
+// app.use(userRouter);
+
+app.listen(PORT, async () => {
+  //   const client = await pool.connect();
+  //   pool.query("insert into uni.test values ('first')");
+  console.log("пошла шарманка на ", PORT);
+});
