@@ -23,17 +23,12 @@ class Controller {
     const { tags, user_id } = req.body;
 
     try {
-      // const { rows } = await db.query(
-      //   `SELECT * FROM tags WHERE userid=${user_id}`
-      // );
-
-      // const typedDbTags = [...rows] as ITag[];
       const typedRequestTags = [...tags] as string[];
 
       await db.query(
         `DELETE FROM tags WHERE tags @> ARRAY${arrayToQuotedString(
           typedRequestTags
-        )};`
+        )} AND userid='${user_id}';`
       );
 
       res.status(200).json({ message: "успех)" });
@@ -47,7 +42,9 @@ class Controller {
     const { tags, user_id } = req.body;
 
     try {
-      const { rows } = await db.query(`SELECT * FROM tags`);
+      const { rows } = await db.query(
+        `SELECT * FROM tags WHERE userid='${user_id}'`
+      );
 
       const typedRequestTags = [...tags] as string[];
       const typedDbTags = [...rows] as ITag[];
@@ -70,7 +67,7 @@ class Controller {
 
         await db.query(query);
 
-        res.status(200).json({ message: "everything is ok from here" });
+        res.status(200).json({ message: "success" });
       } else {
         // создаем неодинарный тег
 
