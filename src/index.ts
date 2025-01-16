@@ -4,10 +4,7 @@ const express = require("express");
 // const { pool } = require("./db");
 const cors = require("cors");
 
-const router = require("./router");
-// const postRouter = require("./post/post.router");
-// const commentRouter = require("./comment/comment.router");
-// const userRouter = require("./user/user.router");
+const router = require("./tags/tags.router");
 
 const PORT = 8000;
 const app = express();
