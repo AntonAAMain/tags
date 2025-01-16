@@ -69,7 +69,7 @@ class Controller {
 
         res.status(200).json({ message: "success" });
       } else {
-        // создаем неодинарный тег
+        // создаем не одинарный тег
 
         for (let i = 0; i < typedDbTags.length; i++) {
           if (typedDbTags[i].tags.length + 1 === typedRequestTags.length) {
@@ -82,7 +82,7 @@ class Controller {
                 matchesCount++;
               }
 
-              if (matchesCount + 1 === thisTags.length) {
+              if (matchesCount + 1 === typedRequestTags.length) {
                 isFoundParent = true;
               }
             }
@@ -98,10 +98,9 @@ class Controller {
 
           res.status(200).json({ message: "успех)" });
         } else {
-          res.status(400).json({ message: "какая-то ошибка" });
+          res.status(400).json({ message: `какая-то ошибка` });
         }
       }
-      // res.status(200).json({ message: "everything is ok" });
     } catch (error) {
       console.log(error);
       res.status(422).json({ message: "error" });
