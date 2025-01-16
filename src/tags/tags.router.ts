@@ -8,5 +8,6 @@ const controller = require("./tags.controller");
 
 router.get("/test/get", controller.getTest);
 router.post("/test/post", controller.createTag);
+router.delete("/test/delete", controller.removeTag);
 
 module.exports = router;

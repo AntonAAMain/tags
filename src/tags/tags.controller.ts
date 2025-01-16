@@ -19,13 +19,35 @@ class Controller {
     }
   }
 
+  async removeTag(req: Request, res: Response) {
+    const { tags, user_id } = req.body;
+
+    try {
+      // const { rows } = await db.query(
+      //   `SELECT * FROM tags WHERE userid=${user_id}`
+      // );
+
+      // const typedDbTags = [...rows] as ITag[];
+      const typedRequestTags = [...tags] as string[];
+
+      await db.query(
+        `DELETE FROM tags WHERE tags @> ARRAY${arrayToQuotedString(
+          typedRequestTags
+        )};`
+      );
+
+      res.status(200).json({ message: "успех)" });
+    } catch (error) {
+      console.log(error);
+      res.status(400).json({ message: "какая-то ошибка" });
+    }
+  }
+
   async createTag(req: Request, res: Response) {
     const { tags, user_id } = req.body;
 
     try {
       const { rows } = await db.query(`SELECT * FROM tags`);
-
-      let matches = 0;
 
       const typedRequestTags = [...tags] as string[];
       const typedDbTags = [...rows] as ITag[];
@@ -50,6 +72,8 @@ class Controller {
 
         res.status(200).json({ message: "everything is ok from here" });
       } else {
+        // создаем неодинарный тег
+
         for (let i = 0; i < typedDbTags.length; i++) {
           if (typedDbTags[i].tags.length + 1 === typedRequestTags.length) {
             const thisTags = [...typedDbTags[i].tags];
@@ -77,7 +101,7 @@ class Controller {
 
           res.status(200).json({ message: "успех)" });
         } else {
-          res.status(200).json({ message: "какая-то ошибка" });
+          res.status(400).json({ message: "какая-то ошибка" });
         }
       }
       // res.status(200).json({ message: "everything is ok" });
