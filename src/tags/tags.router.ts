@@ -6,8 +6,8 @@ const router: Router = new RouterObj();
 
 const controller = require("./tags.controller");
 
-router.get("/test/get", controller.getTest);
-router.post("/test/post", controller.createTag);
-router.delete("/test/delete", controller.removeTag);
+router.get("/tags/all", controller.getTest);
+router.post("/tags/create", controller.createTag);
+router.delete("/tags/delete", controller.removeTag);
 
 module.exports = router;
