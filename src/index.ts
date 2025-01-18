@@ -1,23 +1,17 @@
-import { Request, Response } from "express";
-
 const express = require("express");
-// const { pool } = require("./db");
 const cors = require("cors");
 
-const router = require("./tags/tags.router");
+const tagsRouter = require("./classes/tags/tags.router");
+const todosRouter = require("./classes/todos/todos.router");
 
 const PORT = 8000;
 const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use(router);
-// app.use(postRouter);
-// app.use(commentRouter);
-// app.use(userRouter);
+app.use(tagsRouter);
+app.use(todosRouter);
 
 app.listen(PORT, async () => {
-  //   const client = await pool.connect();
-  //   pool.query("insert into uni.test values ('first')");
   console.log("пошла шарманка на ", PORT);
 });

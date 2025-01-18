@@ -1,9 +1,9 @@
-import { ITag } from "./../../types/tags";
+import { ITag } from "../../../types/tags";
 import { Request, Response } from "express";
 import { Pool } from "pg";
-import { arrayToQuotedString } from "../helpers";
+import { arrayToQuotedString } from "../../helpers";
 
-const db: Pool = require("../db");
+const db: Pool = require("../../dbs/tags");
 
 class Controller {
   async getTest(req: Request, res: Response) {
