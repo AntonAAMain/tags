@@ -23,6 +23,21 @@ class Controller {
     }
   }
 
+  async getAllTodos(req: Request, res: Response) {
+    const { user_id } = req.query;
+
+    try {
+      const { rows } = await db.query(
+        `SELECT * FROM todos` +
+          ((user_id as string)?.length > 0 ? ` WHERE userid='${user_id}'` : "")
+      );
+
+      res.status(200).json({ message: "Все ок)", data: rows });
+    } catch (error) {
+      res.status(500).json({ message: error });
+    }
+  }
+
   async createTodo(req: Request, res: Response) {
     const { title, text, user_id } = req.body;
 
