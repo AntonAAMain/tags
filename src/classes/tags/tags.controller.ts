@@ -3,13 +3,12 @@ import { Request, Response } from "express";
 import { Pool } from "pg";
 import { arrayToQuotedString } from "../../helpers";
 
-const db: Pool = require("../../dbs/tags");
+import { db } from "../../dbs/tags";
+
+// const db: Pool = require("../../dbs/tags");
 
 class Controller {
   async getTest(req: Request, res: Response) {
-    const { title, text, user_id } = req.body;
-    const date = new Date();
-
     try {
       const { rows } = await db.query(`SELECT * FROM tags`);
 
