@@ -8,6 +8,6 @@ const controller = require("./forks.controller");
 
 router.post("/fork/create", controller.createFork);
 router.get("/fork/all", controller.getAll);
-router.delete("/fork/delete", controller.removeFork);
+router.patch("/fork/update", controller.updateFork);
 
 module.exports = router;

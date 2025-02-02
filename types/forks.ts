@@ -3,4 +3,5 @@ export interface IFork {
   path: string[];
   action: string;
   type: string;
+  title: string;
 }
