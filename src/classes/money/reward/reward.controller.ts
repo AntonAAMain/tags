@@ -9,11 +9,13 @@ class Controller {
 
     try {
       const { rows } = await db.query(
-        `SELECT * FROM rewards WHERE name='${name} AND level=${level}'`
+        `SELECT * FROM rewards WHERE name='${name}' AND level=${level}`
       );
 
       if (rows.length > 0) {
-        res.status(500).json({ message: "такая награда уже существует" });
+        return res
+          .status(500)
+          .json({ message: "такая награда уже существует" });
       }
 
       await db.query(

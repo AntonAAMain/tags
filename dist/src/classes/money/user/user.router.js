@@ -1,13 +1,8 @@
-import { Router } from "express";
-
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const RouterObj = require("express");
-
-const router: Router = new RouterObj();
-
+const router = new RouterObj();
 const controller = require("./user.controller");
-
 router.get("/money/user/balance", controller.getBalance);
 router.post("/money/user/reward/buy", controller.buyReward);
-router.get("/money/user/reward/all", controller.getUserRewards);
-
 module.exports = router;

@@ -6,8 +6,6 @@ const router: Router = new RouterObj();
 
 const controller = require("./user.controller");
 
-router.get("/money/user/balance", controller.getBalance);
-router.post("/money/user/reward/buy", controller.buyReward);
-router.get("/money/user/reward/all", controller.getUserRewards);
+router.post("/bmws/user/car/sell", controller.sellUserCar);
 
 module.exports = router;

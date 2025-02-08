@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 
-import { db } from "../../../dbs/money";
+import { db } from "../../../dbs/bmws";
 import { v4 } from "uuid";
 
 class Controller {
@@ -26,13 +26,6 @@ class Controller {
     const isExisted = rows.find((el: any) => el.name === name);
 
     if (isExisted) {
-      // res.cookie("auth", isExisted.token, {
-      //   maxAge: 900000,
-      //   httpOnly: false,
-      //   sameSite: "none",
-      //   secure: true,
-      // });
-
       res.status(200).json({
         message: "успешный вход",
         token: isExisted.token,
@@ -49,16 +42,15 @@ class Controller {
 
     const isExisted = rows.find((el: any) => el.name === name);
 
+    console.log(isExisted);
     if (isExisted) {
       res.status(500).json({ message: "Такой ник уже занят" });
     } else {
       const id = v4();
 
       await db.query(
-        `INSERT INTO users (name, token, last_activity, balance) VALUES ('${name}', '${id}', '${new Date()}', 0)`
+        `INSERT INTO users (name, token, balance) VALUES ('${name}', '${id}',0)`
       );
-
-      // res.cookie("auth", id, { maxAge: 900000, httpOnly: true });
 
       res.status(200).json({ message: "пользователь создан", token: id });
     }
