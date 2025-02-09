@@ -12,7 +12,25 @@ class Controller {
         `SELECT * FROM users WHERE token='${token}'`
       );
 
-      res.status(200).json({ message: "успешный вход", data: rows[0] });
+      if (rows[0].best_car_id) {
+        const { rows: cars } = await db.query(
+          `SELECT * FROM cars WHERE id=${rows[0].best_car_id}`
+        );
+
+        return res
+          .status(200)
+          .json({
+            message: "успешный вход",
+            data: { ...rows[0], bestCar: cars[0] },
+          });
+      }
+
+      res
+        .status(200)
+        .json({
+          message: "успешный вход",
+          data: { ...rows[0], bestCar: null },
+        });
     } else {
       res.status(401).json({ message: "не авторизован" });
     }

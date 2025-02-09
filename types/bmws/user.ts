@@ -3,4 +3,6 @@ export interface IBMWUser {
   balance: number;
   token: string;
   name: string;
+  opened_cases: number;
+  best_car_id: number | null;
 }
