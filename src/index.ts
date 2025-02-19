@@ -15,20 +15,11 @@ const PORT = 8000;
 const app = express();
 
 const corsOptions = {
-  origin: "http://localhost:5173",
+  origin: true,
   credentials: true,
   // secure: false,
   sameSite: "Lax",
 };
-
-app.use((req: Request, res: Response, next: NextFunction) => {
-  res.headers.set(
-    "Access-Control-Allow-Origin",
-    "http://your-frontend-domain.com"
-  );
-  res.headers.set("Access-Control-Allow-Credentials", "true");
-  next();
-});
 
 app.use(cookieParser());
 app.use(cors(corsOptions));
