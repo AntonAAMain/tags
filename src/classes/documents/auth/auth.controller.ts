@@ -1,32 +1,20 @@
 import { Request, Response } from "express";
 
-import { db } from "../../../dbs/bmws";
+import { db } from "../../../dbs/documents";
 import { v4 } from "uuid";
 
 class Controller {
   async whoAmI(req: Request, res: Response) {
     const token = req.cookies["auth"];
-    console.log(req.cookies);
 
     if (token) {
       const { rows } = await db.query(
         `SELECT * FROM users WHERE token='${token}'`
       );
 
-      if (rows[0].best_car_id) {
-        const { rows: cars } = await db.query(
-          `SELECT * FROM cars WHERE id=${rows[0].best_car_id}`
-        );
-
-        return res.status(200).json({
-          message: "успешный вход",
-          data: { ...rows[0], bestCar: cars[0] },
-        });
-      }
-
       res.status(200).json({
         message: "успешный вход",
-        data: { ...rows[0], bestCar: null },
+        data: { ...rows[0] },
       });
     } else {
       res.status(401).json({ message: "не авторизован" });
@@ -41,8 +29,6 @@ class Controller {
     const isExisted = rows.find((el: any) => el.name === name);
 
     if (isExisted) {
-      res.cookie("auth", isExisted.token, { sameSite: "none", path: "/" });
-
       res.status(200).json({
         message: "успешный вход",
         token: isExisted.token,
@@ -59,14 +45,13 @@ class Controller {
 
     const isExisted = rows.find((el: any) => el.name === name);
 
-    console.log(isExisted);
     if (isExisted) {
       res.status(500).json({ message: "Такой ник уже занят" });
     } else {
       const id = v4();
 
       await db.query(
-        `INSERT INTO users (name, token, balance) VALUES ('${name}', '${id}',0)`
+        `INSERT INTO users (name, token, created_at) VALUES ('${name}', '${id}', '${new Date()}')`
       );
 
       res.status(200).json({ message: "пользователь создан", token: id });
