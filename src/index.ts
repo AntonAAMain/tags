@@ -1,3 +1,5 @@
+import { NextFunction } from "express";
+
 const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
@@ -18,6 +20,15 @@ const corsOptions = {
   // secure: false,
   sameSite: "Lax",
 };
+
+app.use((req: Request, res: Response, next: NextFunction) => {
+  res.headers.set(
+    "Access-Control-Allow-Origin",
+    "http://your-frontend-domain.com"
+  );
+  res.headers.set("Access-Control-Allow-Credentials", "true");
+  next();
+});
 
 app.use(cookieParser());
 app.use(cors(corsOptions));
