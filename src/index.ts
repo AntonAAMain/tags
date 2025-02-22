@@ -21,8 +21,8 @@ const corsOptions = {
   sameSite: "Lax",
 };
 
-app.use(cookieParser());
 app.use(cors(corsOptions));
+app.use(cookieParser());
 // app.use(cors());
 app.use(express.json());
 app.use(tagsRouter);

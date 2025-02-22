@@ -7,7 +7,7 @@ import { IBMWCar } from "../../../../types/bmws/box";
 
 class Controller {
   async sellUserCar(req: Request, res: Response) {
-    const token = req.cookies["auth"];
+    const token = req.headers["authorization"];
 
     const { car_id } = req.body;
 
@@ -59,7 +59,7 @@ class Controller {
   }
 
   async resetUser(req: Request, res: Response) {
-    const token = req.cookies["auth"];
+    const token = req.headers["authorization"];
 
     if (!token) {
       return res.status(401).json({ message: "не авторизован" });
@@ -83,9 +83,8 @@ class Controller {
   }
 
   async getUserInventory(req: Request, res: Response) {
-    const token = req.cookies["auth"];
+    const token = req.headers["authorization"];
 
-    // const page = parseInt(req.query.page as string) || 1;
     const sort = req.query.sort;
     const direction = req.query.direction;
     const min = parseInt(req.query.min as string) || 0;

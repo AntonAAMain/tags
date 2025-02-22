@@ -5,8 +5,7 @@ import { v4 } from "uuid";
 
 class Controller {
   async whoAmI(req: Request, res: Response) {
-    const token = req.cookies["auth"];
-    console.log(req.cookies);
+    const token = req.headers["authorization"];
 
     if (token) {
       const { rows } = await db.query(
@@ -41,7 +40,8 @@ class Controller {
     const isExisted = rows.find((el: any) => el.name === name);
 
     if (isExisted) {
-      res.cookie("auth", isExisted.token, { sameSite: "none", path: "/" });
+      res.set("Authorization", isExisted.token);
+      // res.cookie("auth", isExisted.token, { sameSite: "none", path: "/" });
 
       res.status(200).json({
         message: "успешный вход",

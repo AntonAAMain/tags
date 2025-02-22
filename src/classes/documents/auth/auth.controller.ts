@@ -5,7 +5,7 @@ import { v4 } from "uuid";
 
 class Controller {
   async whoAmI(req: Request, res: Response) {
-    const token = req.cookies["auth"];
+    const token = req.headers["authorization"];
 
     if (token) {
       const { rows } = await db.query(

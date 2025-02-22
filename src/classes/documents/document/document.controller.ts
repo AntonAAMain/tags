@@ -8,7 +8,8 @@ import { v4 } from "uuid";
 
 class Controller {
   async saveDocument(req: Request, res: Response) {
-    const token = req.cookies.auth;
+    const token = req.headers["authorization"];
+
     const { id, parts } = req.body;
 
     if (!token) {
@@ -27,7 +28,7 @@ class Controller {
   }
 
   async getDocument(req: Request, res: Response) {
-    const token = req.cookies.auth;
+    const token = req.headers["authorization"];
     const { id } = req.params;
 
     if (!token) {
@@ -58,7 +59,7 @@ class Controller {
   }
 
   async getAllDocuments(req: Request, res: Response) {
-    const token = req.cookies["auth"];
+    const token = req.headers["authorization"];
 
     if (!token) {
       return res.status(401).json({ message: "не авторизован" });
@@ -88,7 +89,7 @@ class Controller {
   async createDocument(req: Request, res: Response) {
     const { name } = req.body;
 
-    const token = req.cookies["auth"];
+    const token = req.headers["authorization"];
 
     if (!token) {
       return res.status(401).json({ message: "не авторизован" });

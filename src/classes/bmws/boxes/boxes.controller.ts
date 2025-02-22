@@ -9,7 +9,7 @@ import { getRandomBoxElement } from "./helpers";
 class Controller {
   async openBox(req: Request, res: Response) {
     const { box_id } = req.body;
-    const token = req.cookies["auth"];
+    const token = req.headers["authorization"];
 
     if (!token) {
       return res.status(401).json({ message: "не авторизован" });
@@ -103,7 +103,7 @@ class Controller {
   }
 
   async getAllBoxes(req: Request, res: Response) {
-    const token = req.cookies["auth"];
+    const token = req.headers["authorization"];
 
     if (token) {
       const { rows } = await db.query(`SELECT * FROM boxes`);
@@ -115,7 +115,7 @@ class Controller {
   }
 
   async getBox(req: Request, res: Response) {
-    const token = req.cookies["auth"];
+    const token = req.headers["authorization"];
     const { id } = await req.query;
 
     if (token) {
